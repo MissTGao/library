@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>APICloud APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style>
+    html,
+    body {
+        height: 100%;
+        background: #f0f0f0;
+    }
+    
+    .h20 {
+        height: 20px;
+    }
+    
+    .title {
+        background-color: rgb(138, 136, 129);
+        height: 44px;
+        line-height: 44px;
+        padding-left: 10px;
+        color: #fff;
+        font-size: 14px;
+        border-bottom: solid rgb(96, 96, 96) 1px;
+    }
+    
+    .item {
+        background-color: #fff;
+        height: 44px;
+        line-height: 44px;
+        padding-left: 10px;
+        color: #000;
+        font-size: 14px;
+        border-bottom: solid rgb(215, 215, 215) 1px;
+    }
+    
+    .item>img {
+        float: right;
+        padding-top: 10px;
+        padding-right: 10px;
+        height: 25px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="h20"></div>
+    <div class="item" tapmode onclick="fnChange('user')">
+        <span>用户消息</span>
+        <img id="user" src="../image/switch_on.png">
+    </div>
+    <div class="h20"></div>
+    <div class="item" tapmode onclick="fnChange('system')">
+        <span>系统消息</span>
+        <img id="system" src="../image/switch_on.png">
+    </div>
+    <div class="h20"></div>
+    <div class="item" tapmode onclick="fnChange('broadcast')">
+        <span>广播消息</span>
+        <img id="broadcast" src="../image/switch_on.png">
+    </div>
+</body>
+<script type="text/javascript" src="../js/api.js"></script>
+<script type="text/javascript">
+apiready = function() {
+
+    fnInit();
+
+}
+var user, system, broadcast;
+var userTag, systemTag, broadcastTag;
+var changeOne = ['user', 'system', 'broadcast'];
+var changeOneTag;  // 0关  1 开
+
+function fnInit() {
+    user = $api.byId('user');
+    system = $api.byId('system');
+    broadcast = $api.byId('broadcast');
+
+    userTag = $api.getStorage('user_Tag');
+    systemTag = $api.getStorage('system_Tag');
+    broadcastTag = $api.getStorage('broadcast_Tag');
+
+    // if (typeof userTag!='undefined') {
+    //     userTag = 1;
+    // }
+    // if (typeof systemTag!='undefined') {
+    //     systemTag = 1;
+    // }
+    // if (typeof broadcastTag!='undefined') {
+    //     broadcastTag = 1;
+    // }
+
+    alert(userTag);
+    alert(systemTag);
+    alert(broadcastTag);
+
+    changeOneTag = [userTag, systemTag, broadcastTag];
+
+    fnChangeOne(changeOne[0], changeOneTag[0], 0);
+}
+
+function fnChangeOne(key, tag, index) {
+    if (index == changeOne.length) {
+        return;
+    }
+    var kTag = key + 'Tag';
+
+
+    var onoff
+    if (tag == 0) {
+        onoff = 'off';
+    } else {
+        onoff = 'on';
+
+    }
+
+    window[key].src = '../image/switch_' + onoff + '.png';
+    fnChangeOne(changeOne[index + 1], changeOneTag[index + 1], index + 1);
+
+};
+
+function fnChange(key) {
+    var kTag = key + 'Tag';
+    if (window[kTag] == 0) {
+        window[kTag] = 1;
+    } else {
+        window[kTag] = 0;
+    }
+    $api.setStorage(key + '_Tag', window[kTag]);
+
+    var onoff = window[kTag] ? 'on' : 'off';
+    alert(window[kTag]);
+
+    window[key].src = '../image/switch_' + onoff + '.png';
+};
+</script>
+</html

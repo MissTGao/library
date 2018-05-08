@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>APICloud APP</title>
+        <link rel="stylesheet" type="text/css" href="../css/api.css" />
+        <style>
+            header {
+                background-color: #fff;
+                border-bottom: solid #e0e0e0 1px;
+            }
+            
+            h1 {
+                height: 50px;
+                line-height: 50px;
+                color: rgb(38, 38, 38);
+                color: #000;
+                font-size: 20px;
+                text-align: center;
+            }
+            
+            .back {
+                position: absolute;
+                left: 0px;
+                bottom: 0px;
+                width: 50px;
+                height: 50px;
+                background: url(../image/header/back.png) center center no-repeat;
+                background-size: 15px auto;
+            }
+            
+            nav {
+                position: relative;
+                height: 50px;
+                background-color: #fff;
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: flex;
+                border-bottom: solid #e0e0e0 1px;
+            }
+            
+            nav>div {
+                -webkit-box-flex: 1;
+                -webkit-flex: 1;
+                flex: 1;
+                width: 100%;
+                line-height: 50px;
+                color: #9C9C9C;
+                font-size: 18px;
+                text-align: center;
+            }
+            
+            .nav-act {
+                color: #ff6836;
+            }
+            
+            .nav-hov {
+                background-color: rgba(250, 240, 230, 0.7);
+            }
+            
+            mark {
+                position: absolute;
+                bottom: 0px;
+                left: 0px;
+                text-align: center;
+                background: transparent;
+                -webkit-transition: 300ms;
+            }
+            
+            mark>img {
+                height: 8px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <div class="back" tapmode onclick="api.closeWin();"></div>
+            <h1>用户消息</h1>
+        </header>
+        <nav>
+            <div class="nav-act" tapmode="nav-hov" onclick="fnSetFrameGroupIndex(0);">用户消息</div>
+            <div tapmode="nav-hov" onclick="fnSetFrameGroupIndex(1);">系统消息</div>
+            <div tapmode="nav-hov" onclick="fnSetFrameGroupIndex(2);">广播消息</div>
+            <mark><img src="../image/header/arrow_up.png"></mark>
+        </nav>
+    </body>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript">
+        apiready = function() {
+            var header = $api.dom('header');
+            $api.fixIos7Bar(header);
+
+            var nav = $api.dom('nav');
+            var headerH = $api.offset(header).h;
+
+            var navH = $api.offset(nav).h;
+            var mark = $api.dom(nav, 'mark');
+            mark.style.width = (api.winWidth / 3) + 'px';
+
+            api.openFrameGroup({
+                name: 'message_group',
+                scrollEnabled: true,
+                rect: {
+                    x: 0,
+                    y: headerH + navH,
+                    w: 'auto',
+                    h: 'auto'
+                },
+                index: 0,
+                frames: [{
+                    name: 'user_msg_frame',
+                    url: 'user_msg_frame.html',
+                    bounces: false
+                }, {
+                    name: 'system_msg_frame',
+                    url: 'system_msg_frame.html',
+                    bounces: false
+                }, {
+                    name: 'broadcast_msg_frame',
+                    url: 'broadcast_msg_frame.html',
+                    bounces: false
+                }]
+            }, function(ret, err) {
+                fnSetNavItemActive(ret.index);
+            });
+        };
+
+        function fnSetNavItemActive(index_) {
+            var nav = $api.dom('nav');
+            var navItems = $api.domAll(nav, 'div');
+
+            for (var i = 0; i < navItems.length; i++) {
+                $api.removeCls(navItems[i], 'nav-act');
+            };
+
+            $api.addCls(navItems[index_], 'nav-act');
+
+            var mark = $api.dom(nav, 'mark');
+            var markPosX = (api.winWidth / 3) * index_ + 'px';
+            $api.css(mark, '-webkit-transform: translate(' + markPosX + ', 0)');
+        };
+
+        function fnSetFrameGroupIndex(index) {
+            api.setFrameGroupIndex({
+                name: 'messageFrames',
+                index: index,
+                scroll: true
+            });
+        };
+    </script>
+
+</html>

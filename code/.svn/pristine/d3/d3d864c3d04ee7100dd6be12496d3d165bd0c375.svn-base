@@ -1,0 +1,69 @@
+var db;
+
+function fnInitLocal() {
+    db = api.require('db');
+};
+
+var DATABASE = 'database_o2o',
+    FAVORITE = 'table_favorite',
+    HISTORY = 'table_history';
+
+function fnOpenDatabase() {
+    fnInitLocal();
+
+    db.openDatabase({
+        name: DATABASE
+    }, function(ret, err) {
+        if (ret.status) {
+            db.executeSql({
+                name: DATABASE,
+                sql: 'CREATE TABLE ' + FAVORITE + '(shopId VARCHAR(64),price DOUBLE,thumbnail VARCHAR(1024),shopName VARCHAR(64),shopType INTEGER)'
+            });
+
+            db.executeSql({
+                name: DATABASE,
+                sql: 'CREATE UNIQUE INDEX ' + FAVORITE + '_idx ON ' + FAVORITE + '(shopId)'
+            });
+
+            db.executeSql({
+                name: DATABASE,
+                sql: 'CREATE TABLE ' + HISTORY + '(shopId VARCHAR(64),price DOUBLE,thumbnail VARCHAR(1024),shopName VARCHAR(64),shopType INTEGER,visitTime DATETIME)'
+            });
+
+            db.executeSql({
+                name: DATABASE,
+                sql: 'CREATE UNIQUE INDEX ' + HISTORY + '_idx ON ' + HISTORY + '(shopId)'
+            });
+        }
+
+        callback(ret, err);
+    });
+};
+
+function fnInsertFavorite(data, callback) {
+    db.executeSql({
+        name: DATABASE,
+        sql: 'REPLACE INTO ' + FAVORITE + '(shopId,price,thumbnail,shopName,shopType) VALUES("' + data.id + '",' + data.price + ',"' + data.thumbnail.url + '","' + data.shopName + '",' + data.shopType + ')'
+    }, callback);
+};
+
+function fnInsertHistory(data, callback) {
+    db.executeSql({
+        name: DATABASE,
+        sql: 'REPLACE INTO ' + HISTORY + '(shopId,price,thumbnail,shopName,shopType,visitTime) VALUES("' + data.id + '",' + data.price + ',"' + data.thumbnail.url + '","' + data.shopName + '",' + data.shopType + ',datetime("now"))'
+    }, callback);
+};
+
+function fnSelectFavorite(callback) {
+    db.selectSql({
+        name: DATABASE,
+        sql: 'select shopId,price,thumbnail,shopName,shopType from ' + FAVORITE
+    }, callback);
+};
+
+function fnSelectHistory(callback) {
+    db.selectSql({
+        name: DATABASE,
+        sql: 'select shopId,price,thumbnail,shopName,shopType,visitTime from ' + HISTORY
+    }, callback);
+};

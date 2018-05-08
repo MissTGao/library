@@ -1,0 +1,174 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>APICloud APP</title>
+        <link rel="stylesheet" type="text/css" href="../css/api.css" />
+        <style>
+            html,
+            body {
+                height: 100%;
+                background: #f0f0f0;
+            }
+            
+            .h1 {
+                height: 1px;
+                margin-left: 15px;
+                background: #f0f0f0;
+            }
+            
+            .h10 {
+                height: 10px;
+                background: #f0f0f0;
+            }
+            
+            section {
+                background-color: #fff;
+            }
+            
+            section>div {
+                height: 50px;
+                line-height: 50px;
+                padding-left: 15px;
+            }
+            
+            .arrow {
+                float: right;
+                width: 16px;
+                padding: 17px 15px 15px 0;
+            }
+            
+            .item-hov {
+                background-color: #EAEAEA;
+            }
+            
+            #cacheSize {
+                float: right;
+                margin-right: 15px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="h10"></div>
+        <section>
+            <div tapmode="item-hov" onclick="fnOpenSettingImageWin();">
+                <span>图片设置</span>
+                <img src="../image/arrow.png" class="arrow">
+            </div>
+            <div class="h1"></div>
+            <div tapmode="item-hov" onclick="fnOpenSettingNotifyWin();">
+                <span>消息提醒</span>
+                <img src="../image/arrow.png" class="arrow">
+            </div>
+            <div class="h1"></div>
+            <div tapmode="item-hov" onclick="fnClearCache();">
+                <span>清除缓存</span>
+                <var id="cacheSize">0&nbsp;MB</var>
+            </div>
+        </section>
+        <div class="h10"></div>
+        <section>
+            <div tapmode onclick="fnCheckUpdate();">
+                <span>版本更新</span>
+                <img src="../image/arrow.png" class="arrow">
+            </div>
+            <div class="h1"></div>
+            <div tapmode="item-hov" onclick="fnOpenFeedbackWin();">
+                <span>意见反馈</span>
+                <img src="../image/arrow.png" class="arrow">
+            </div>
+            <div class="h1"></div>
+            <div tapmode="item-hov" onclick="fnOpenAboutWin();">
+                <span>关于我们</span>
+                <img src="../image/arrow.png" class="arrow">
+            </div>
+            </div>
+            <div class="h10"></div>
+            <div class="h10"></div>
+    </body>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript">
+        apiready = function() {
+            fnGetCacheSize();
+        };
+
+        function fnCheckUpdate() {
+            var mam = api.require('mam');
+            mam.checkUpdate(function(ret, err) {
+                if (ret && ret.status) {
+                    if (!ret.result.update) {
+                        api.alert({
+                            title: '版本更新',
+                            msg: '当前已是最新版本，版本号：' + api.appVersion
+                        });
+                    } else {
+                        api.confirm({
+                            title: '有新版本',
+                            msg: '已发布最新版本，建议您尽快更新。版本号：' + ret.result.version,
+                            buttons: ['马上更新', '以后再说']
+                        }, function(ret, err) {
+                            if (ret.buttonIndex == 1) {
+                                alert('很抱歉，你正在使用演示版，无法更新');
+                            }
+                        });
+                    }
+                }
+            });
+        };
+
+        function fnOpenFeedbackWin() {
+            api.openWin({
+                name: 'feedback',
+                url: './feedback.html'
+            });
+        };
+
+        function fnOpenAboutWin() {
+            api.openWin({
+                name: 'about',
+                url: './about.html'
+            });
+        };
+
+        function fnOpenSettingImageWin() {
+            api.openWin({
+                name: 'setting_image',
+                url: './setting_image.html'
+            });
+        };
+
+        function fnOpenSettingNotifyWin() {
+            api.openWin({
+                name: 'setting_notify',
+                url: 'setting_notify.html'
+            });
+        };
+
+        function fnClearCache() {
+            api.showProgress({
+                title: '清除中',
+                modal: true
+            });
+
+            api.clearCache(function() {
+                setTimeout(function() {
+                    fnGetCacheSize();
+                }, 1000);
+            });
+
+        };
+
+        function fnGetCacheSize() {
+            api.getCacheSize(function(ret, err) {
+                api.hideProgress();
+                var size = parseInt(ret.size / 1024 / 1024 * 100) / 100 + '&nbsp;MB';
+                var cacheSize = $api.byId('cacheSize');
+                cacheSize.innerHTML = size;
+            });
+        };
+    </script>
+
+</html>

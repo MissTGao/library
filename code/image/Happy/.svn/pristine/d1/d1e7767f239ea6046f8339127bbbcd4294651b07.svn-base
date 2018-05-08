@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>APICloud APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style>
+    header {
+        background: #FCFCFC;
+        height: 50px;
+        border-bottom: 1px solid #DDDFE3;
+    }
+    
+    .back {
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
+        width: 50px;
+        height: 50px;
+        background: url(../image/header/back.png) center center no-repeat;
+        background-size: 15px auto;
+    }
+    
+    .menu {
+        position: absolute;
+        left: 90px;
+        right: 90px;
+        bottom: 10px;
+        background-color: #fcfcfc;
+        height: 30px;
+        line-height: 30px;
+        border-radius: 4px;
+        color: #fff;
+        text-align: center;
+        border: 1px solid #f63;
+    }
+    
+    .menu .menu-item {
+        position: relative;
+        float: left;
+        width: 50%;
+        height: 30px;
+        display: inline-block;
+        color: #FF6633;
+    }
+    
+    .menu .menu-item.active {
+        background-color: #FF6633;
+        color: #fff;
+    }
+    
+    .menu .menu-item:first-child {
+        border-radius: 4px 0 0 4px;
+    }
+    
+    .menu .menu-item:last-child {
+        border-radius: 0px 4px 4px 0px;
+    }
+    </style>
+</head>
+
+<body>
+    <header id="header">
+        <div class="back" onclick="api.closeWin()"></div>
+        <div class="menu">
+            <div class="menu-item" onclick="fnChangeStye(0)">商户</div>
+            <div class="menu-item" onclick="fnChangeStye(1)">团购</div>
+        </div>
+    </header>
+</body>
+<script type="text/javascript" src="../js/api.js"></script>
+<script type="text/javascript">
+apiready = function() {
+    fnInit();
+    fnChangeStye(0);
+    fnInitframegroup();
+};
+var header;
+var menus;
+var headerHeigh;
+
+function fnInit() {
+    // alert(api.pageParam.shopType);
+    header = $api.byId('header');
+    menus = $api.domAll(header, '.menu-item');
+    $api.fixStatusBar(header);
+    headerHeigh = $api.offset(header).h;
+
+};
+
+function change(index) {
+
+
+};
+
+function fnChangeStye(index) {
+
+    for (var i = 0; i < menus.length; i++) {
+        if (index == i) {
+            $api.addCls(menus[i], 'active');
+            fnInitframegroup(index);
+
+        } else {
+            $api.removeCls(menus[i], 'active');
+
+        }
+
+    }
+};
+var frameGroup=['shoplist_frame','groupbuy_frame'];
+
+function fnInitframegroup(index){
+
+var frames =[{
+            name: 'shoplist_frame', 
+            url: './shoplist_frame.html',
+            bgColor: '#fff',
+            pageParam:{
+                shopType :api.pageParam.shopType,
+                groupbuyType :0
+            }
+        }
+        ,{
+            name: 'groupbuy_frame', 
+            url: './shoplist_frame.html', 
+            bgColor: '#fff',
+            pageParam:{
+                shopType :api.pageParam.shopType,
+                groupbuyType :1
+            }
+        }] 
+
+    api.openFrameGroup ({
+        name: 'shoplist_frame',
+        background: './shoplist_frame.html',
+        scrollEnabled: true,
+        rect: {
+             x: 0, 
+             y: headerHeigh, 
+             w: api.winWidth, 
+             h: api.winHeight -headerHeigh
+        },
+        index: api.pageParam.groupbuyType,
+        frames: frames
+    }, function(ret, err){
+        fnChangeStye(ret.index);
+
+    });
+};
+
+function fnchangge(index){
+
+    api.setFrameGroupIndex({
+        name: 'shoplist_frame',
+        index: index,
+        scroll: true
+    });
+    fnChangeStye(index);
+
+}
+
+
+</script>
+
+</html>

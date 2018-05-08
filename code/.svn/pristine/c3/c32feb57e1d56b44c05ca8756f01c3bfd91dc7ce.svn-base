@@ -1,0 +1,228 @@
+var dot, list, amap, lbs, table;
+
+function fnInitVar(table) {
+    list = $api.byId('list');
+    amap = api.require('aMap');
+    lbs = $api.getStorage('lbs') || { status: false };
+    var template = $api.byId('template');
+    if (template) {
+        dot = doT.template(template.innerHTML);
+    }
+    var client = new Resource(appid, appkey);
+    window.table = client.Factory(table);
+
+    api.addEventListener({
+        name: 'custom_lbs'
+    }, function(ret, err) {
+        lbs = $api.getStorage('lbs') || { status: false };
+    });
+};
+
+function fnInitPullRefresh(where, limit) {
+    api.setRefreshHeaderInfo({
+        visible: true,
+        bgColor: '#f0f0f0',
+        textColor: '#888',
+        textDown: '下拉刷新',
+        textUp: '松开刷新',
+        showTime: false,
+    }, function(ret, err) {
+        fnGetShoplist(false, where, limit, true);
+    });
+};
+
+function fnInitPushRefresh(where, limit) {
+    api.addEventListener({
+        name: 'scrolltobottom'
+    }, function(ret, err) {
+        fnGetShoplist(true, where, limit, false);
+    });
+};
+
+
+var isEmpty = false,
+    skip = 0;
+var dataLoading = false;
+
+function fnGetShoplist(progress, where, limit, isPull, callback) {
+    if (dataLoading) {
+        return;
+    }
+    dataLoading = true;
+
+    if (isPull) {
+        skip = 0;
+        isEmpty = false;
+    }
+
+    if (isEmpty) {
+        api.toast({
+            msg: '已全部加载',
+            duration: 2000,
+            location: 'bottom'
+        });
+        dataLoading = false;
+        return;
+    }
+
+    if (progress) {
+        api.showProgress({
+            title: '加载中',
+            modal: false
+        });
+    }
+
+    table.query({
+        "filter": {
+            "fields": {
+                'createdAt': false,
+                'updatedAt': false
+            },
+            where: where,
+            skip: skip,
+            limit: limit
+        }
+    }, function(ret, err) {
+        api.hideProgress();
+        api.refreshHeaderLoadDone();
+        dataLoading = false;
+
+        if (!ret) {
+            api.toast({
+                msg: '网络不给力',
+                duration: 2000,
+                location: 'bottom'
+            });
+            return;
+        }
+
+        skip += limit;
+        if (ret.length < limit) {
+            isEmpty = true;
+        }
+
+        if (ret.length == 0) {
+            return;
+        }
+
+        if (callback) {
+            callback(ret, err);
+            return;
+        }
+
+        if (isPull) {
+            list.innerHTML = dot(ret);
+        } else {
+            list.innerHTML += dot(ret);
+        }
+
+        api.parseTapmode();
+
+        fnCacheImage(ret, 0);
+
+        fnGetDistance(ret, 0);
+    });
+};
+
+function fnCacheImage(shops, index) {
+    if (shops.length <= index) {
+        return;
+    }
+
+    var id = shops[index].id || shops[index].shopId;
+    var image = $api.byId('img_' + id);
+    if (!image) {
+        return;
+    }
+
+    api.imageCache({
+        url: shops[index].thumbnail.url || shops[index].thumbnail
+    }, function(ret, err) {
+        image.src = ret.url;
+        fnCacheImage(shops, index + 1);
+    });
+};
+
+function fnGetDistance(shops, index) {
+    if (false == lbs.status || shops.length <= index) {
+        return;
+    }
+
+    var distance = $api.byId('distance_' + shops[index].id);
+    if (!distance) {
+        return;
+    }
+
+    amap.getCoordsFromName({
+        city: '武汉',
+        address: shops[index].address
+    }, function(ret, err) {
+        if (!ret.status) {
+            distance.innerHTML = '未知';
+            fnGetDistance(shops, index + 1);
+            return;
+        }
+
+        amap.getDistance({
+            start: lbs,
+            end: ret
+        }, function(ret) {
+            if (!ret.status) {
+                distance.innerHTML = '未知';
+                fnGetDistance(shops, index + 1);
+                return;
+            }
+
+            distance.innerHTML = ret.distance >= 1000 ? parseInt(ret.distance / 10) / 100 + 'km' : parseInt(ret.distance) + 'm';
+            fnGetDistance(shops, index + 1);
+        });
+    });
+};
+
+var salesType = ['立减10元', '返1%'];
+
+function fnGetSales(sales) {
+    var html = '';
+    for (var i = 0; i < sales.length; i++) {
+        html += '<span class="sale">' + salesType[sales[i]] + '</span>';
+    }
+    return html;
+};
+
+function fnOpenShopList(type, shopType) {
+    api.openWin({
+        name: 'shoplist',
+        url: './shoplist.html',
+        bounces: false,
+        pageParam: {
+            type: type,
+            shopType: shopType
+        },
+        delay: 200
+    });
+};
+
+function fnOpenShop(shopId, price, shopName) {
+    api.openWin({
+        name: 'shop',
+        url: './shop.html',
+        bounces: false,
+        pageParam: {
+            shopId: shopId,
+            price: price,
+            shopName: shopName
+        }
+    });
+};
+
+function fnOpenSearchResult(keyword) {
+    api.openWin({
+        name: 'search_result',
+        url: './search_result.html',
+        bounces: false,
+        pageParam: {
+            keyword: keyword
+        },
+        delay: 200
+    });
+};

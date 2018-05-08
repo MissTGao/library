@@ -1,0 +1,40 @@
+<widget id="A6916013433226" version="0.0.1">
+    <name>APICloud Demo App</name>
+    <description>
+        Example For APICloud.
+    </description>
+    <author email="developer@apicloud.com" href="http://www.apicloud.com">
+        Developer
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <preference name="pageBounce" value="false" />
+    <preference name="appBackground" value="rgba(0,0,0,0.0)" />
+    <preference name="windowBackground" value="rgba(0,0,0,0.0)" />
+    <preference name="frameBackgroundColor" value="rgba(0,0,0,0.0)" />
+    <preference name="hScrollBarEnabled" value="false" />
+    <preference name="vScrollBarEnabled" value="false" />
+    <preference name="autoLaunch" value="false" />
+    <preference name="fullScreen" value="false" />
+    <preference name="autoUpdate" value="true" />
+    <preference name="smartUpdate" value="true" />
+    <preference name="debug" value="true" />
+    <preference name="iOS7StatusBarAppearance" value="true" />
+    <preference name="customRefreshHeader" value="UIPullRefreshFlash" />
+    <permission name="readPhoneState" />
+    <permission name="camera" />
+    <permission name="record" />
+    <permission name="location" />
+    <permission name="fileSystem" />
+    <permission name="internet" />
+    <permission name="bootCompleted" />
+    <permission name="hardware" />
+    <feature name="qq">
+        <param name="urlScheme" value="tencent1105322378" />
+        <param name="apiKey" value="1105322378" />
+    </feature>
+    <feature name="aMap">
+        <param name="android_api_key" value="8132b4d0b4052e77c4152833cd170437" />
+        <param name="ios_api_key" value="425f456772196de8a99709170f9fdc94" />
+    </feature>
+</widget>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style>
+    html,
+    body {
+        height: 100%;
+        background-color: transparent;
+    }
+    
+    .header {
+        position: relative;
+        width: 100%;
+        height: 44px;
+    }
+    
+    .header .skip-button {
+        position: absolute;
+        right: 16px;
+        top: 10px;
+        width: 80px;
+        height: 35px;
+        font-size: 14px;
+        text-align: center;
+        line-height: 35px;
+        color: #888;
+        border: 1px solid #ccc;
+        border-radius: 18px;
+        background-color: #fff;
+        background-image: url(../image/welcome/arrow.png);
+        background-repeat: no-repeat;
+        background-size: 12px 20px;
+        background-position: 62px center;
+    }
+    </style>
+</head>
+
+<body>
+    <header id="header" class="header">
+        <div class="skip-button" onclick="skip()">跳过</div>
+    </header>
+</body>
+<script type="text/javascript" src="../js/api.js"></script>
+<script type="text/javascript">
+apiready = function() {
+    init();
+};
+
+function init() {
+    var header = $api.byId('header');
+    $api.fixStatusBar(header);
+};
+
+function skip() {
+       api.closeFrameGroup({
+        name: 'welcome_group'
+    });
+    api.setPrefs({
+        key: 'pref_welcom_show',
+        value: true
+    });
+};
+</script>
+
+</html>

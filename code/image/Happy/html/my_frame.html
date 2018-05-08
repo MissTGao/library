@@ -1,0 +1,287 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>APICloud APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style>
+    html,
+    body {
+        height: 100%;
+        background-color: #f0f0f0;
+    }
+
+    .h10 {
+        height: 10px;
+        background: #f0f0f0;
+    }
+
+    .h1 {
+        height: 1px;
+        margin-left: 15px;
+        background: #f0f0f0;
+    }
+
+    .fr {
+        float: right;
+    }
+
+    .hint {
+        color: #666;
+        font-size: 12px;
+        margin-right: 5px;
+    }
+
+    .firstblock,
+    .secondblock,
+    .thirdblock {
+        background-color: #fff;
+    }
+
+    .login {
+        background-image: url(../image/my/personal_bkg.jpg);
+        background-repeat: no-repeat;
+        background-size: contain;
+        position: relative;
+    }
+
+    .logins {
+        width: 100%;
+        height: 35%;
+        position: absolute;
+        top: 50px;
+        left: 0;
+        box-sizing: border-box;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    .loginbg {
+        width: 100%;
+    }
+
+    .login .personal_logo {
+        position: absolute;
+        top: 60px;
+        width: 64px;
+        height: 64px;
+        left: 20px;
+    }
+
+    .person_arrow {
+        position: absolute;
+        height: 20px;
+        right: 10px;
+        top: 90px;
+    }
+
+    .login .userinfo {
+        position: absolute;
+        top: 60px;
+        margin-left: 100px;
+    }
+
+    .login .userinfo .title {
+        font-size: 20px;
+        color: #fff;
+    }
+
+    .login .userinfo .subtitle {
+        font-size: 14px;
+        color: #fff;
+        border: 1px solid #fff;
+        display: inline-block;
+        padding: 3px;
+        border-radius: 4px;
+        margin-top: 5px;
+    }
+
+    .item {
+        height: 50px;
+        line-height: 50px;
+        padding-left: 15px;
+        background-color: #fff;
+    }
+
+    .item_ico {
+        float: left;
+        width: 30px;
+        padding: 10px 10px 10px 0;
+    }
+
+    .item_arrow {
+        float: right;
+        width: 16px;
+        padding: 17px 15px 15px 0;
+    }
+
+    .item-hov {
+        background-color: #E8E8E8;
+    }
+
+
+    .login #userLogin {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 233px;
+    }
+
+    .login .avatar {
+        position: relative;
+        top: 65px;
+        width: 100%;
+        height: 80px;
+    }
+
+    .login .avatar .avatar-image {
+        display: block;
+        margin: 0 auto;
+        width: 60px;
+        height: 60px;
+        border: 4px solid #fff;
+        border-radius: 34px;
+        background-clip: padding-box;
+    }
+
+    .login .userLogin.nick {
+        position: relative;
+        top: 65px;
+        width: 100%;
+        height: 18px;
+        color: #fff;
+        font-weight: bold;
+        text-align: center;
+        line-height: 18px;
+        font-size: 18px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="login">
+        <img src="../image/my/personal_bkg.jpg" class="loginbg">
+        <img src="../image/my/personal_icon_arrow.png" class="person_arrow">
+        <div  id ="logins" class="logins open-win " win="login" tapmode="item-hov">
+            <img id="userAvatar" src="../image/my/profile_default.png" class="personal_logo">
+            <div class="userinfo">
+                <!-- open-win" tapmode="item-hov" win="setting_image" -->
+                <div id="userAccount" tapmode="item-hov" class="title">点击登录</div>
+                <!--             <div id="userRegion" class="subtitle">常居地：未设置</div>-->
+            </div>
+        </div>
+        <div id="userLogin" class="userLogin">
+
+            <div class="avatar open-win" win="management" param= "传值" >
+                <img id="avatar" src="../image/my/personal_bkgjpg" class="avatar-image">
+            </div>
+            <div id="nick" class="nick">秦帅哥</div>
+        </div>
+    </div>
+    <div class="h10"></div>
+    <div class="firstblock">
+        <div class="item open-win" win="myorder" tapmode="item-hov">
+            <img src="../image/my/my_order_user_icon_normal.png" alt="" class="item_ico">
+            <span>我的订单</span>
+            <img src="../image/arrow.png" class="item_arrow">
+        </div>
+        <div class="h1"></div>
+        <div class="item open-win" win="mygroupvolume" tapmode="item-hov">
+            <img src="../image/my/my_coupon_user_icon_normal.png" class="item_ico">
+            <span>我的团购券</span>
+            <img src="../image/arrow.png" class="item_arrow">
+        </div>
+    </div>
+    <div class="h10"></div>
+    <div class="secondblock">
+        <div class="item open-win" win="myfavorite" tapmode="item-hov">
+            <img src="../image/my/my_favorite_user_icon_normal.png" class="item_ico">
+            <span>我的收藏</span>
+            <img src="../image/arrow.png" class="item_arrow">
+        </div>
+        <div class="h1"></div>
+        <div class="item open-win" win="myhistory" tapmode="item-hov">
+            <img src="../image/my/my_history_user_icon_normal.png" class="item_ico">
+            <span>最近浏览</span>
+            <img src="../image/arrow.png" class="item_arrow">
+        </div>
+        <div class="h1"></div>
+    </div>
+    <div class="h10"></div>
+    <div class="thirdblock open-win" win="setting">
+        <div class="h1"></div>
+        <div class="item">
+            <img src="../image/my/my_setting_user_icon_normal.png " class="item_ico">
+            <span>设置</span>
+            <img src="../image/arrow.png" class="item_arrow">
+        </div>
+    </div>
+    <div class="h10"></div>
+    <div class="h10"></div>
+</body>
+<script type="text/javascript" src="../js/api.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript">
+apiready = function() {
+    fnReady();
+    fnInit();
+};
+
+
+var logins, userLogin, avatar, nick;
+var qq;
+
+function fnInit() {
+
+    logins = $api.byId('logins');
+    avatar = $api.byId('avatar');
+    nick = $api.byId('nick');
+    userLogin = $api.byId('userLogin');
+
+  
+
+var  loginInfo= $api.getStorage('loginInfo') || 0;
+    if (loginInfo) {
+    fnLoginiIfo(1);
+
+    }else{
+    fnLoginiIfo(0);
+
+    }
+
+
+};
+
+
+// 是否登陆 改变登录状态 调用 1登陆 0枚登陆
+function fnLoginiIfo(index) {
+
+      // 控制两个控件的显示和隐藏
+    // userLogin.style.display = 'none';
+    // alert(index);
+
+    if (index) {
+    userLogin.style.display = 'block';
+    logins.style.display = 'none';
+
+    alert('登陆成功回掉' + $api.getStorage('login_info'));
+    nick.innerHTML = $api.getStorage('nick') || '12345678';
+
+    }else{
+    userLogin.style.display = 'none';
+    logins.style.display = 'block';
+
+    }
+
+
+
+
+
+
+}
+</script>
+
+</html>

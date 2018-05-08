@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>APICloud APP</title>
+        <link rel="stylesheet" type="text/css" href="../css/api.css" />
+        <style>
+            html,
+            body {
+                height: 100%;
+                background: #f0f0f0;
+            }
+            
+            .darktitle {
+                height: 40px;
+                line-height: 40px;
+                margin-left: 15px;
+                font-size: 14px;
+                color: #666;
+            }
+            
+            .row {
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: flex;
+            }
+            
+            .col {
+                -webkit-box-flex: 1;
+                -webkit-flex: 1;
+                flex: 1;
+                position: relative;
+            }
+            
+            .flipcard {
+                height: 30px;
+                line-height: 30px;
+                color: #000;
+                text-align: center;
+                font-size: 14px;
+                margin: 5px 5px 3px 5px;
+                background-color: #fff;
+            }
+            
+            .inwrap {
+                margin: 0 10px;
+            }
+            
+            .item-hov {
+                background-color: #FAFAFA;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="darktitle">热门搜索</div>
+        <div class="row inwrap">
+            <div class="col flipcard" tapmode="item-hov" onclick="fnOpenSearchResult('影城');">影城</div>
+            <div class="col flipcard" tapmode="item-hov" onclick="fnOpenSearchResult('红磨坊');">红磨坊</div>
+            <div class="col flipcard" tapmode="item-hov" onclick="fnOpenSearchResult('KTV');">KTV</div>
+        </div>
+        <div class="row inwrap">
+            <div class="col flipcard" tapmode="item-hov" onclick="fnOpenSearchResult('太阳城');">太阳城</div>
+            <div class="col flipcard" tapmode="item-hov" onclick="fnOpenSearchResult('光谷');">光谷</div>
+            <div class="col flipcard" tapmode="item-hov" onclick="fnOpenSearchResult('俱乐部');">俱乐部</div>
+        </div>
+    </body>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript">
+        function fnOpenSearchResult(keyword) {
+            api.openWin({
+                name: 'search_result',
+                url: './search_result.html',
+                bounces: false,
+                pageParam: {
+                    keyword: keyword
+                }
+            });
+        };
+    </script>
+
+</html>

@@ -1,0 +1,511 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>Hello APP</title>
+    <link rel="stylesheet" type="text/css" href="./css/api.css" />
+    <style type="text/css">
+    html,
+    body {
+        height: 100%;
+        background-color: #ccc;
+    }
+
+    body {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-flex-flow: column;
+        flex-flow: column;
+    }
+
+    section {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        flex: 1;
+    }
+
+    header {
+        position: relative;
+        height: auto;
+    }
+
+    footer {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        box-sizing: border-box;
+        height: 50px;
+        background-color: rgb(250, 250, 250);
+        border-top: 1px solid #ccc;
+    }
+
+    footer>div {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        flex: 1;
+        width: 100%;
+        color: rgb(165, 165, 165);
+        font-size: 12px;
+        text-align: center;
+        padding-bottom: 4px;
+        padding-top: 34px;
+        background-repeat: no-repeat;
+        background-position: center 6px;
+        background-size: auto 24px;
+    }
+
+    footer>div:nth-child(1) {
+        background-image: url(./image/footer/home.png);
+    }
+
+    footer>div:nth-child(2) {
+        background-image: url(./image/footer/groupbuy.png);
+    }
+
+    footer>div:nth-child(3) {
+        background-image: url(./image/footer/find.png);
+    }
+
+    footer>div:nth-child(4) {
+        background-image: url(./image/footer/my.png);
+    }
+
+    footer>div:nth-child(1).active {
+        background-image: url(./image/footer/home_act.png);
+        color: rgb(254, 151, 84);
+    }
+
+    footer>div:nth-child(2).active {
+        background-image: url(./image/footer/groupbuy_act.png);
+        color: rgb(254, 151, 84);
+    }
+
+    footer>div:nth-child(3).active {
+        background-image: url(./image/footer/find_act.png);
+        color: rgb(254, 151, 84);
+    }
+
+    footer>div:nth-child(4).active {
+        background-image: url(./image/footer/my_act.png);
+        color: rgb(254, 151, 84);
+    }
+
+    .header-item {
+        position: relative;
+        display: none;
+        padding-top: 20px;
+    }
+
+    .header-item-act {
+        display: block;
+    }
+
+    header>div:nth-child(1) {
+        position: relative;
+        background-color: rgb(255, 132, 0);
+        height: 50px;
+    }
+
+    header>div:nth-child(2) {
+        position: relative;
+        height: 50px;
+        background-color: rgb(252, 252, 252);
+    }
+
+    header>div:nth-child(3) {
+        position: relative;
+        height: 50px;
+        background-color: rgb(252, 252, 252);
+    }
+    /* header home */
+
+    .home-citylist {
+        float: left;
+        height: 50px;
+        line-height: 50px;
+        color: #fff;
+        font-size: 14px;
+        margin-left: 15px;
+    }
+
+    .home-citylist>img {
+        height: 20px;
+        vertical-align: top;
+        padding-top: 15px;
+    }
+
+    .home-search {
+        position: absolute;
+        bottom: 8px;
+        left: 90px;
+        right: 60px;
+        height: 34px;
+        line-height: 34px;
+        background-color: rgb(250, 102, 4);
+        border-radius: 34px;
+        color: rgb(253, 194, 155);
+        font-size: 14px;
+    }
+
+    .home-search>img {
+        height: 20px;
+        padding-top: 7px;
+        padding-left: 10px;
+        padding-right: 10px;
+        vertical-align: top;
+    }
+
+    .home-msg {
+        float: right;
+    }
+
+    .home-msg>img {
+        height: 28px;
+        padding-top: 11px;
+        vertical-align: top;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    /* header groupbuy */
+
+    .groupbuy-citylist {
+        float: left;
+        height: 50px;
+        line-height: 50px;
+        color: rgb(255, 132, 0);
+        font-size: 18px;
+        margin-left: 15px;
+    }
+
+    .groupbuy-citylist>img {
+        height: 15px;
+        vertical-align: top;
+        padding-top: 18px;
+    }
+
+    .groupbuy-search {
+        position: absolute;
+        bottom: 8px;
+        left: 110px;
+        right: 15px;
+        height: 34px;
+        line-height: 34px;
+        background-color: rgb(232, 232, 232);
+        border-radius: 34px;
+        color: rgb(153, 153, 153);
+        font-size: 14px;
+    }
+
+    .groupbuy-search>img {
+        height: 20px;
+        padding-top: 7px;
+        padding-left: 10px;
+        padding-right: 10px;
+        vertical-align: top;
+    }
+    /* header search */
+
+    .find-search {
+        position: absolute;
+        bottom: 8px;
+        left: 15px;
+        right: 60px;
+        height: 34px;
+        line-height: 34px;
+        border-radius: 34px;
+        background-color: rgb(232, 232, 232);
+        color: rgb(153, 153, 153);
+        font-size: 14px;
+    }
+
+    .find-search>img {
+        height: 20px;
+        padding-top: 7px;
+        padding-left: 10px;
+        padding-right: 10px;
+        vertical-align: top;
+    }
+
+    .find-scanner {
+        float: right;
+        width: 50px;
+        background: url(./image/header/qrcode_search.png) no-repeat center 6px;
+        background-size: auto 24px;
+        padding-top: 33px;
+        color: rgb(153, 153, 153);
+        font-size: 12px;
+        text-align: center;
+    }
+
+    .find-scanner-hov {
+        background-color: #ddd;
+    }
+
+    .highlight {
+        opacity: 0.7;
+    }
+    </style>
+</head>
+
+<body>
+    <header id="header">
+        <div class="header-item header-item-act" id="home">
+            <div class="home-citylist open-win" win="citylist">
+                <span id="currentCity_home" class="currentCity">武汉</span>
+                <img src="./image/header/arrow_down_home.png">
+            </div>
+            <div class="home-search open-win" win="search">
+                <img src="./image/header/search_home.png">
+                <span>输入商户名、地点</span>
+            </div>
+            <div class="home-msg open-win" win="message">
+                <img src="./image/header/msg_home.png">
+            </div>
+        </div>
+        <div class="header-item" id="groupbuy">
+            <div class="groupbuy-citylist open-win" win="citylist">
+                <span id="currentCity_groupbuy" class="currentCity">北京</span>
+                <img src="./image/header/arrow_down_groupbuy.png">
+            </div>
+            <div class="groupbuy-search open-win" win="html/search">
+                <img src="./image/header/search_groupbuy.png">搜索团购...
+            </div>
+        </div>
+        <div class="header-item" id="find">
+            <div class="find-search open-win" win="html/search">
+                <img src="./image/header/search_groupbuy.png"> 输入商户名、地点
+            </div>
+            <div class="find-scanner" tapmode="highlight" onclick="fnOpenScanner()">
+                扫一扫
+            </div>
+        </div>
+        <div class="header-item" id="my">
+        </div>
+    </header>
+    <section></section>
+    <div class="place-hold"></div>
+    <footer id='footer' class="footer">
+        <div class="menu home active" tapmode="active" onclick="fnChange(0)">首页</div>
+        <div class="menu groupbuy" tapmode="active" onclick="fnChange(1)">团购</div>
+        <div class="menu find" tapmode="active" onclick="fnChange(2)">发现</div>
+        <div class="menu my" tapmode="active" onclick="fnChange(3)">我的</div>
+    </footer>
+</body>
+<script type="text/javascript" src="./js/api.js"></script>
+<script type="text/javascript" src="./js/common.js"></script>
+<script type="text/javascript">
+apiready = function() {
+    //输出Log，Log将显示在APICloud Studio控制台
+    console.log("12345678");
+    fnReady();
+    fnInit();
+    fninitListener();
+    fnCheck();
+    fnChange(0);
+
+};
+
+var header, footer;
+var menus, headers;
+var headerHeight, footerHeight;
+var currentCity_home, currentCity_groupbuy;
+
+function fnInit() {
+    var header = $api.byId('header'),
+        footer = $api.byId('footer');
+    currentCity_home = $api.byId('currentCity_home');
+    currentCity_groupbuy = $api.byId('currentCity_groupbuy');
+
+    var city = $api.getStorage('cityName') || '北京';
+    if (city.length > 3) {
+        city = city.substring(0, 3) + '...';
+    }
+    currentCity_home.innerHTML = currentCity_groupbuy.innerHTML = city;
+
+
+    menus = $api.domAll(footer, '.menu'),
+        headers = $api.domAll(header, '.header-item');
+    for (var i = 0; i < headers.length; i++) {
+        $api.fixStatusBar(headers[i]);
+    }
+
+    headerHeight = $api.offset(header).h;
+    footerHeight = $api.offset(footer).h;
+
+};
+
+var menuNames = ['home_frame', 'groupbuy_frame', 'find_frame', 'my_frame'];
+
+
+function ChoiceBt() {
+
+
+
+};
+
+
+function fnCheck() {
+    api.getPrefs({
+        key: 'pref_welcom_show'
+    }, function(ret, err) {
+        if ('' != ret.value) {
+            // fnOpenWelcomGroup();
+        } else {
+            fnOpenWelcomGroup();
+        }
+    });
+};
+
+
+
+function fnOpenWelcomGroup() {
+
+    var welcomeFrams = [];
+    for (var i = 0; i < 4; i++) {
+        welcomeFrams.push({
+            name: 'welcome_' + i,
+            url: './html/welcome_' + i + '.html',
+            bounces: false,
+            bgColor: './image/welcome/' + (i + 1) + '.png'
+        })
+
+    }
+
+    api.openFrameGroup({
+        name: 'welcome_group',
+        background: '#fff',
+        scrollEnabled: true,
+        rect: {
+            x: 0,
+            y: 0,
+            w: 'auto',
+            h: 'auto'
+        },
+        index: 0,
+        frames: welcomeFrams
+    }, function(ret, err) {
+        if (ret) {
+            if (ret.index == 3) {
+                setTimeout(function() {
+                    fnSkip();
+                }, 1000 * api.pageParam.closeTime);
+            }
+        } else {
+            alert(JSON.stringify(err));
+        }
+    });
+};
+
+function fnSkip() {
+    api.closeFrameGroup({
+        name: 'welcome_group'
+    });
+    api.setPrefs({
+        key: 'pref_welcom_show',
+        value: true
+    });
+};
+
+function fnChange(index) {
+    for (var i = 0; i < menus.length; i++) {
+        if (index == i) {
+
+            $api.addCls(menus[i], 'active');
+            $api.addCls(headers[i], 'header-item-act');
+
+            fnOpenChooseFrame(index);
+        } else {
+
+            $api.removeCls(menus[i], 'active');
+            $api.removeCls(headers[i], 'header-item-act');
+
+            api.setFrameAttr({
+                name: menuNames[i],
+                hidden: true
+            });
+        }
+        fnCloseOther(index);
+
+    }
+};
+
+function fnOpenChooseFrame(index) {
+    var y = headerHeight;
+    if (index == 3) {
+        y = 0
+    }
+    api.openFrame({
+        name: menuNames[index],
+        url: './html/' + menuNames[index] + '.html',
+        rect: {
+            x: 0,
+            y: y,
+            w: api.winWidth,
+            h: api.winHeight - y - footerHeight
+        },
+        pageParam: {
+            name: '传值'
+        },
+        bounces: true,
+        bgColor: 'rgba(0,0,0,0)',
+    });
+
+};
+// 关闭隐藏
+function fnCloseOther() {
+
+
+
+};
+
+function fnOpenScanner() {
+
+    var FNScanner = api.require('FNScanner');
+
+    FNScanner.openScanner({
+        autorotation: false,
+    }, function(ret, err) {
+
+        if ('success' == ret.eventType) {
+            if (/^shop(.+)$/gi.test(ret.content)) {
+                var shopId = RegExp.$1;
+                api.openWin({
+                    name: 'shop',
+                    url: './html/shop.html',
+                    pageParam: {
+                        shopId: shopId
+                    }
+                });
+
+            } else {
+                alert('123' + JSON.stringify(ret));
+            }
+        }
+    });
+}
+
+// 是否诚实选择
+function fninitListener() {
+    api.addEventListener({
+        name: 'event_cityName'
+    }, function(ret, err) {
+        if (ret) {
+            var city = ret.value.key2;
+            if (city.length > 3) {
+                city = city.substring(0, 3) + '...';
+            }
+            currentCity_home.innerHTML = currentCity_groupbuy.innerHTML = city;
+        } else {
+            alert(JSON.stringify(err));
+        }
+    });
+
+}
+</script>
+
+</html>

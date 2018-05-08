@@ -1,0 +1,271 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>APICloud APP</title>
+        <link rel="stylesheet" type="text/css" href="../css/api.css" />
+        <style>
+            html,
+            body {
+                height: 100%;
+                background-color: #f0f0f0;
+            }
+            
+            .empty>img {
+                float: left;
+                padding-left: 20px;
+                height: 124px;
+            }
+            
+            .empty>span {
+                height: 124px;
+                line-height: 124px;
+                padding-left: 20px;
+            }
+            
+            .h80 {
+                height: 80px;
+            }
+            
+            .h40 {
+                height: 40px;
+            }
+            
+            .h20 {
+                height: 20px;
+            }
+            
+            .h10 {
+                height: 10px;
+                background: #f0f0f0;
+            }
+            
+            .hightitem {
+                background-color: #fff;
+            }
+            
+            .home-tuan-list .item {
+                position: relative;
+                display: block;
+                padding-left: 10px;
+            }
+            
+            .home-tuan-list .cnt {
+                padding: 7px 10px 10px 0;
+                display: box;
+                display: -webkit-box;
+                height: 78px;
+                background-size: auto 1px;
+            }
+            
+            .home-tuan-list .pic {
+                margin-right: 10px;
+                background: center;
+            }
+            
+            .home-tuan-list img {
+                width: 90px;
+                height: 66px;
+                margin-top: 7px;
+                margin-bottom: 5px;
+                border-radius: 3px;
+            }
+            
+            .home-tuan-list .wrap {
+                -webkit-box-flex: 1;
+            }
+            
+            .home-tuan-list .wrap2 {
+                display: table;
+                height: 88px;
+                width: 100%;
+            }
+            
+            .home-tuan-list .content {
+                -webkit-box-flex: 1;
+                box-flex: 1;
+                display: table-cell;
+                vertical-align: middle;
+            }
+            
+            .home-tuan-list .shopname {
+                color: #333;
+                /*line-height: 16px;*/
+                font-size: 17px;
+                max-width: 11em;
+                white-space: nowrap;
+                word-wrap: normal;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                min-height: 10px;
+                padding-bottom: 2px;
+                padding-top: 3px;
+                display: inline-block;
+            }
+            
+            .home-tuan-list .comment {
+                margin-bottom: 6px;
+                position: relative;
+            }
+            
+            .home-tuan-list .comment span {
+                vertical-align: middle;
+                color: #666;
+                font-size: 12px;
+            }
+            
+            .home-tuan-list .star {
+                display: inline-block;
+                width: 66px;
+                height: 12px;
+                vertical-align: middle;
+                background: url(../image/remark.png) no-repeat;
+                background-size: 86px auto;
+            }
+            
+            .star.star-50 {
+                background-position: 0 -215px;
+            }
+            
+            .star.star-40 {
+                background-position: 0 -249px;
+            }
+            
+            .star.star-30 {
+                background-position: 0 -283px;
+            }
+            
+            .star.star-20 {
+                background-position: 0 -300px;
+            }
+            
+            .star.star-10 {
+                background-position: 0 -317px;
+            }
+            
+            .home-tuan-list .star {
+                margin-right: 10px;
+            }
+            
+            .home-tuan-list .price {
+                color: #f60;
+                font-size: 20px;
+                line-height: 15px;
+                margin-right: 5px;
+                margin-top: 1px;
+            }
+            
+            .home-tuan-list .o-price {
+                color: #f60;
+                margin-top: 5px;
+                line-height: 10px;
+            }
+            
+            .home-tuan-list .distance {
+                -webkit-box-flex: 1;
+                box-flex: 1;
+                -ms-box-flex: 1;
+                -ms-flex: 1;
+                text-align: right;
+                line-height: 10px;
+                margin-top: 5px;
+                color: #999;
+                float: right;
+                font-size: 12px;
+            }
+            
+            .home-tuan-list .distance img {
+                width: 10px;
+                height: 10px;
+                vertical-align: top;
+                margin: 0;
+            }
+            
+            .home-tuan-list .classify {
+                color: #666;
+                font-size: 12px;
+            }
+            
+            .home-tuan-list .price,
+            .index-rec .home-tuan-list .o-price,
+            .index-rec .home-tuan-list .distance,
+            .index-rec .home-tuan-list .sale {
+                display: block;
+                line-height: 15px;
+                font-size: 12px;
+            }
+            
+            .Fix:after {
+                display: block;
+                content: '';
+                height: 0;
+                clear: both;
+            }
+            
+            .item-hov {
+                opacity: 0.7;
+            }
+        </style>
+    </head>
+
+    <body>
+        <section id="empty" class="empty">
+            <img src="../image/home/no_message.png">
+            <span>暂无消息</span>
+        </section>
+        <section id="list" class="home-tuan-list"></section>
+    </body>
+    <script type="text/template" id="template">
+        {{~ it:data }}
+        <div class="item Fix hightitem" tapmode="item-hov" onclick="fnOpenShop('{{= data.shopId }}',{{= data.price }},'{{= data.shopName }}');">
+            <div class="cnt">
+                <img id="img_{{= data.shopId }}" class="pic" src="../image/default.jpg">
+                <div class="wrap">
+                    <div class="wrap2">
+                        <div class="content">
+                            <div class="shopname">{{=data.shopName }}</div>
+                            <div class="classify">{{= data.visitTime }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{~}}
+    </script>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/SHA1.js"></script>
+    <script type="text/javascript" src="../script/APICloud-rest.js"></script>
+    <script type="text/javascript" src="../script/doT.min.js"></script>
+    <script type="text/javascript" src="../script/localdb.js"></script>
+    <script type="text/javascript" src="../script/remotedb.js"></script>
+    <script type="text/javascript">
+        var empty, db;
+
+        apiready = function() {
+            empty = $api.byId('empty');
+            fnInitVar('shop');
+
+            db = api.require('db');
+
+            fnInitHistorylist();
+        };
+
+        function fnInitHistorylist() {
+            fnGetShopFromHistory(db, function(ret, err) {
+                if (ret.status && 0 < ret.data.length) {
+                    empty.style.display = 'none';
+
+                    list.innerHTML = dot(ret.data);
+                    api.parseTapmode();
+
+                    fnCacheImage(ret.data, 0);
+                } else {
+                    empty.style.display = 'block';
+                }
+            });
+        };
+    </script>
+
+</html>
