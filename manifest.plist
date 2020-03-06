@@ -11,7 +11,7 @@
 					<key>kind</key>
 					<string>software-package</string>
 					<key>url</key>
-					<string>https://sx-server.oss-cn-beijing.aliyuncs.com/iOS/rilikuaiche(5)(1).ipa?OSSAccessKeyId=LTAIxu0RyVNGbWQt&amp;Expires=1582615527&amp;Signature=FowT27%2FlwHwHtNF4JiDVuEMBj3M%3D</string>
+					<string>https://sx-server.oss-cn-beijing.aliyuncs.com/iOS/rilikuaiche%205.ipa?OSSAccessKeyId=LTAIxu0RyVNGbWQt&amp;Expires=1593468182&amp;Signature=iXanvQuYyeUo7ySjU8KFlabA%2BEo%3D</string>
 				</dict>
 			</array>
 			<key>metadata</key>
@@ -19,7 +19,7 @@
 				<key>bundle-identifier</key>
 				<string>com.zjrl.rlyd</string>
 				<key>bundle-version</key>
-				<string>2.70</string>
+				<string>2.71</string>
 				<key>kind</key>
 				<string>software</string>
 				<key>subtitle</key>
